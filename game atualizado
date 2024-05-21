@@ -1,0 +1,527 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <conio.h>
+#include <time.h>
+
+void exibirMenuPrincipal() {
+    printf("=== Giras & Casseb in Angras Shown ===\n");
+    printf("1. Jogar\n");
+    printf("2. Tutorial\n");
+    printf("3. Sair\n");
+    printf("4. lore do jogo!\n");
+}
+
+void exibirGameOver() {
+	 system("cls");
+    printf("\n");
+    printf("  ________                        ________                     \n");
+    printf(" /  _____/_____    _____   ____   \\_____  \\___  __ ___________ \n");
+    printf("/   \\  ___\\__  \\  /     \\_/ __ \\   /   |   \\  \\/ // __ \\_  __ \\\n");
+    printf("\\    \\_\\  \\/ __ \\|  Y Y  \\  ___/  /    |    \\   /\\  ___/|  | \\/\n");
+    printf(" \\______  (____  /__|_|  /\\___  > \\_______  /\\_/  \\___  >__|   \n");
+    printf("        \\/     \\/      \\/     \\/          \\/          \\/       \n");
+    printf("\n");
+    
+   
+  
+}
+void exibir_vitoria(){
+    printf("     O       O\n");
+    printf("    /|\\[ ] /|\\\n");
+    printf("    / \\     / \\\n");
+    printf(" __/   \\_ /   \\__\n");
+    printf("|               |\n");
+    printf("|_______________|\n");
+    
+    printf("parabéns aventureiro agr girotto esta livre das garras da mestre alessandra e pode ir pro happy hour e pro shown do angra junto ao casseb.\n");
+    
+   printf("  _____ _           \n");
+    printf(" |  ___(_)          \n");
+    printf(" | |_   _ _ __  ___ \n");
+    printf(" |  _| | | '_ \\/ _ \\\n");
+    printf(" | |   | | | |  __/\n");
+    printf(" \\_|   |_|_| |_|\\___|\n");
+
+}
+
+
+
+
+void moverMonstroAleatoriamente(char mapa[][20], int *x, int *y) {
+    int direcao;
+
+    do {
+        direcao = rand() % 4 + 1;
+        switch (direcao) {
+            case 1:
+                if (mapa[*y - 1][*x] != '*' && mapa[*y - 1][*x ] != '#'  && mapa[*y - 1][*x ] != '@') {
+                    *y -= 1;
+                }
+                break;
+            case 2:
+                if (mapa[*y + 1][*x] != '*' && mapa[*y + 1][*x] != '#'&& mapa[*y + 1][*x] != '@') {
+                    *y += 1;
+                }
+                break;
+            case 3:
+                if (mapa[*y][*x - 1] != '*' && mapa[*y][*x - 1] != '#'&& mapa[*y][*x - 1] != '@') {
+                    *x -= 1;
+                }
+                break;
+            case 4:
+                if (mapa[*y][*x + 1] != '*' && mapa[*y][*x + 1] != '#'&& mapa[*y][*x + 1] != '@') {
+                    *x += 1;
+                }
+                break;
+        }
+    } while (mapa[*y][*x] == '*');
+}
+
+void moverMonstroNivel2(char mapa[40][40], int *xMonstro, int *yMonstro, int xJogador, int yJogador) {
+    int dx = xJogador - *xMonstro;
+    int dy = yJogador - *yMonstro;
+
+    if (abs(dx) > abs(dy)) {
+        if (dx > 0 && mapa[*yMonstro][*xMonstro + 1] != '*') {
+            (*xMonstro)++;
+        } else if (dx < 0 && mapa[*yMonstro][*xMonstro - 1] != '*') {
+            (*xMonstro)--;
+        }
+    } else {
+        if (dy > 0 && mapa[*yMonstro + 1][*xMonstro] != '*') {
+            (*yMonstro)++;
+        } else if (dy < 0 && mapa[*yMonstro - 1][*xMonstro] != '*') {
+            (*yMonstro)--;
+        }
+    }
+}
+
+
+void exibir_fase2() {
+    int i, j;
+    char mapa[20][20] = {
+        "********************",
+        "*                 O*",
+        "***            *   *",
+        "*   #   #*******   *",
+        "****           #   *",
+        "*   #   ****       *",
+        "*##   #*           *",
+        "***    *    *   #  *",
+        "*      #    * #    *",
+        "*  *       *       *",
+        "*  *      *   *    *",
+        "*        *    *    *",
+        "*  *               *",
+        "*  ***##  ***      *",
+        "*      @           *",
+        "*      ##     #    *",
+        "*   *****    #     *",
+        "*   *##         ****",
+        "*                 D*",
+        "********************",
+    };
+
+    int xJogador = 1, yJogador = 1;
+    int xMonstro = 10, yMonstro = 15;
+    int vidas = 3;
+
+    srand(time(NULL));
+
+    char movimento;
+    int aux = 1;
+  
+    while ((movimento = getch()) != 'q'&& aux !=2) {
+        system("cls");
+        switch (movimento) {
+            case 'w':
+                if (mapa[yJogador - 1][xJogador] != '*' && mapa[yJogador - 1][xJogador] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    yJogador--;
+                }
+                break;
+            case 'a':
+                if (mapa[yJogador][xJogador - 1] != '*' &&  (mapa[yJogador][xJogador - 1] != '@')) {
+                    mapa[yJogador][xJogador] = ' ';
+                    xJogador--;
+                }
+                break;
+            case 's':
+                if (mapa[yJogador + 1][xJogador] != '*' && mapa[yJogador + 1][xJogador] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    yJogador++;
+                }
+                break;
+            case 'd':
+                if (mapa[yJogador][xJogador + 1] != '*' && mapa[yJogador][xJogador + 1] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    xJogador++;
+                }
+                break;
+             case 'i':
+                if ((mapa[yJogador][xJogador + 1] == '@' || mapa[yJogador][xJogador - 1] == '@' ||
+                     mapa[yJogador + 1][xJogador] == '@' || mapa[yJogador - 1][xJogador] == '@') &&
+                    (mapa[yJogador][xJogador + 1] == ' ' || mapa[yJogador][xJogador - 1] == ' ' ||
+                     mapa[yJogador + 1][xJogador] == ' ' || mapa[yJogador - 1][xJogador] == ' ')) {
+                    for (i = 0; i < 20; i++) {
+                        for (j = 0; j < 20; j++) {
+                            if (mapa[i][j] == '@') {
+                                mapa[i][j] = ' ';
+                                break;
+                            }
+                        }
+                    }
+                    for (i = 0; i < 20; i++) {
+                        for (j = 0; j < 20; j++) {
+                            if (mapa[i][j] == 'D') {
+                                mapa[i][j] = '=';
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+
+        int xAntigo = xMonstro, yAntigo = yMonstro;
+        moverMonstroAleatoriamente(mapa, &xMonstro, &yMonstro);
+        mapa[yAntigo][xAntigo] = ' ';
+
+        if (mapa[yJogador][xJogador] == '#' || (xJogador == xMonstro && yJogador == yMonstro)) {
+           vidas--;
+           xJogador = 1, yJogador = 1;
+            
+        }
+       
+        if (mapa[yJogador][xJogador] == 'O') {
+            vidas++;
+        }
+         if (mapa[yJogador][xJogador] == '=') {
+                        exibirFase_3();
+                       aux++;
+                    }
+
+        mapa[yJogador][xJogador] = '&';
+        mapa[yMonstro][xMonstro] = 'x';
+        
+
+        for (i = 0; i < 20; i++) {
+            for (j = 0; j < 20; j++) {
+                printf("%c", mapa[i][j]);
+                
+                
+            }
+            puts(" ");
+        }
+        printf("vidas:[%d]",vidas);
+        if(vidas == 0){
+        	
+        	 exibirGameOver();
+        	 
+        	 
+        	 
+		}
+    }
+}
+
+void exibirFase_3(){
+
+int i;
+	int j;
+	char mapa[40][40] = {
+	"****************************************",
+	"*                                      *",
+	"*              *******                 *",
+	"*******        *         *******       *",
+	"*#            #*   #                   *",
+	"*  # *******      **  ******##    ******",
+	"*                  #       *           *",
+	"********   ******     ***********      *",
+	"*            ##       ###  *           *",
+	"*                  *       *   *********",
+	"*     ********     *                  >*", 
+	"*     ###    *     *******##  **********",
+	"*                                  # # *",
+	"*********    *******  ###           #  *",
+	"*       #          O       ******  # # *",
+	"*         #    #      #           *****",
+	"*****          *********   #     #     *",
+	"*     *******      *      **** ****  ##*",
+	"*                  *                   *",
+	"**  ************   *   ********     ****",
+	"*        #         *            *     *",
+	"*  ##     #        *     #####   *     *",
+	"*                  *          #  *     *",
+	"*     *********   * *      *   # *    @*",
+	"*        #       *   *      *   #**  ***",
+	"*            ####     ####   *         *",
+	"******                        **********",
+	"*        *********                     *",
+	"*    *****  #    #    *****  ******    *", 
+	"*                         #    #       *",
+	"*        *    *********            *****",
+	"*****# ***            *#    # *        *",
+	"*    #   *****  ****          ******** *",
+	"*<                   ##******** ####   *",
+	"**********   #****            * ***** **",
+	"*                      *              **",
+	"*       **********    ***   ##******* **",	
+	"*       #        #           #*    *****",	
+	"*                     ##               D*",			
+	"****************************************",
+	};
+	
+	int xJogador = 1, yJogador = 1;
+    int xMonstro = 10, yMonstro = 15;
+    int xMonstro2 = 40 - 2, yMonstro2 = 3;
+    int vidas = 3;
+
+    srand(time(NULL));
+
+    char movimento;
+    int aux =1;
+    while ((movimento = getch()) != 'q'&&aux != 2) {
+        system("cls");
+        switch (movimento) {
+            case 'w':
+                if (mapa[yJogador - 1][xJogador] != '*' && mapa[yJogador - 1][xJogador] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    yJogador--;
+                }
+                break;
+            case 'a':
+                if (mapa[yJogador][xJogador - 1] != '*' &&  (mapa[yJogador][xJogador - 1] != '@')) {
+                    mapa[yJogador][xJogador] = ' ';
+                    xJogador--;
+                }
+                break;
+            case 's':
+                if (mapa[yJogador + 1][xJogador] != '*'  && mapa[yJogador + 1][xJogador] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    yJogador++;
+                }
+                break;
+            case 'd':
+                if (mapa[yJogador][xJogador + 1] != '*' && mapa[yJogador][xJogador + 1] != '@') {
+                    mapa[yJogador][xJogador] = ' ';
+                    xJogador++;
+                }
+                break;
+             case 'i':
+                if ((mapa[yJogador][xJogador + 1] == '@' || mapa[yJogador][xJogador - 1] == '@' ||
+                     mapa[yJogador + 1][xJogador] == '@' || mapa[yJogador - 1][xJogador] == '@') &&
+                    (mapa[yJogador][xJogador + 1] == ' ' || mapa[yJogador][xJogador - 1] == ' ' ||
+                     mapa[yJogador + 1][xJogador] == ' ' || mapa[yJogador - 1][xJogador] == ' ')) {
+                    for (i = 0; i < 40; i++) {
+                        for (j = 0; j < 40; j++) {
+                            if (mapa[i][j] == '@') {
+                                mapa[i][j] = ' ';
+                                break;
+                            }
+                        }
+                    }
+                    for (i = 0; i < 40; i++) {
+                        for (j = 0; j < 40; j++) {
+                            if (mapa[i][j] == 'D') {
+                                mapa[i][j] = '=';
+                                break;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+
+        int xAntigo = xMonstro, yAntigo = yMonstro;
+        moverMonstroAleatoriamente(mapa, &xMonstro, &yMonstro);
+        mapa[yAntigo][xAntigo] = ' ';
+        
+        int xAntigo2 = xMonstro2, yAntigo2 = yMonstro2;
+        moverMonstroNivel2(mapa, &xMonstro2, &yMonstro2, xJogador, yJogador);
+        mapa[yAntigo2][xAntigo2] = ' ';
+
+        if (mapa[yJogador][xJogador] == '#' || (xJogador == xMonstro && yJogador == yMonstro|| (xJogador == xMonstro2 && yJogador == yMonstro2))) {
+           vidas--;
+           xJogador = 1, yJogador = 1;
+        }
+        if (mapa[yJogador][xJogador] == 'O') {
+            vidas++;
+        }
+       
+		if(mapa[yJogador][xJogador] == '>' ){
+			yJogador= 33;
+			xJogador = 2;
+			
+			
+		}
+		if(mapa[yJogador][xJogador] == '<' ){
+			yJogador= 10;
+			xJogador = 37;
+			
+			
+		}
+		 if (mapa[yJogador][xJogador] == '=') {
+                        exibir_vitoria();
+                        return 0;
+                    }
+
+        mapa[yJogador][xJogador] = '&';
+        mapa[yMonstro][xMonstro] = 'x';
+        mapa[yMonstro2][xMonstro2] = 'V';
+
+        
+       
+
+	for(i=0;i<40;i++){
+		for(j=0;j<40;j++){
+			printf("%c", mapa[i][j]);
+
+		}
+	puts(" ");
+	}
+        printf("vidas:[%d]",vidas);
+        
+        if(vidas == 0){
+        	
+        	 exibirGameOver();
+        	 
+        	 
+        	 
+		}
+
+}
+
+}
+
+int main() {
+    int escolha;
+
+    do {
+        exibirMenuPrincipal();
+        scanf("%d", &escolha);
+
+        switch(escolha) {
+            case 1: {
+                int i, j;
+                char mapa[10][10] = {
+                    "**********",
+                    "*  **    *",
+                    "*  *     *",
+                    "*    *@* *",
+                    "*    *** *",
+                    "*        *",
+                    "*    *** *",
+                    "***    * *",
+                    "*D       *",
+                    "**********",
+                };
+
+                int x = 1, y = 1;
+                int aux = 1;
+
+                char movimento;
+                while ((movimento = getch()) != 'q'&& aux != 2) {
+                    system("cls");
+                    switch (movimento) {
+                        case 'w':
+                            if (mapa[y - 1][x] != '*' && mapa[y - 1][x] != '@') {
+                                mapa[y][x] = ' ';
+                                y--;
+                            }
+                            break;
+                        case 'a':
+                            if (mapa[y][x - 1] != '*'&&  (mapa[y][x - 1] != '@')) {
+                                mapa[y][x] = ' ';
+                                x--;
+                            }
+                            break;
+                        case 's':
+                            if (mapa[y + 1][x] != '*'&& mapa[y + 1][x] != '@') {
+                                mapa[y][x] = ' ';
+                                y++;
+                            }
+                            break;
+                        case 'd':
+                            if (mapa[y][x + 1] != '*'&& mapa[y][x + 1] != '@') {
+                                mapa[y][x] = ' ';
+                                x++;
+                            }
+                            break;
+                        case 'i':
+                            if (mapa[y][x + 1] == '@' || mapa[y][x - 1] == '@' ||
+                                mapa[y + 1][x] == '@' || mapa[y - 1][x] == '@') {
+                                for (i = 0; i < 10; i++) {
+                                    for (j = 0; j < 10; j++) {
+                                        if (mapa[i][j] == 'D') {
+                                            mapa[i][j] = '=';
+                                        }
+                                    }
+                                }
+                                if (mapa[y][x + 1] == '@') mapa[y][x + 1] = ' ';
+                                if (mapa[y][x - 1] == '@') mapa[y][x - 1] = ' ';
+                                if (mapa[y + 1][x] == '@') mapa[y + 1][x] = ' ';
+                                if (mapa[y - 1][x] == '@') mapa[y - 1][x] = ' ';
+                            }
+                            break;
+                    }
+                    if (mapa[y][x] == '=') {
+                        exibir_fase2();
+                        aux = 2;
+                        
+                    }
+                    
+                    
+
+                    mapa[y][x] = '&';
+
+                    for (i = 0; i < 10; i++) {
+                        for (j = 0; j < 10; j++) {
+                            printf("%c", mapa[i][j]);
+                        }
+                        puts(" ");
+                    }
+                }
+                system("cls");
+                break;
+            }
+            case 2:
+                system("cls");
+                printf("Este jogo e um dungeon crawler. O objetivo e simples: desvie dos inimigos, resolva os enigmas e evite obstaculos para passar de fase.\n\n");
+                printf("O jogador tem 3 vidas sempre que voce perde uma volta do inicio!");
+                printf("Comandos:\n W: O jogador movimenta uma unidade para cima;");
+                printf("\nA: O jogador movimenta uma unidade para esquerda;");
+                printf("\nS: O jogador movimenta uma unidade para baixo;");
+                printf("\nD: O jogador movimenta uma unidade para direita;");
+                printf("\nI: O jogador interage com o objeto que esta proximo.");
+                printf("\n&: Simbolo que representa o jogador.");
+                printf("\n*: Simbolo que representa uma parede, o jogador ao se movimentar nao pode passar pela parede.");
+                printf("\n@: Simbolo que representa a chave para abrir a porta para finalizar a fase, a porta abre no momento que o jogador interage com a chave.");
+                printf("\nD: Simbolo que representa a porta fechada.");
+                printf("\n=: Simbolo que representa a porta aberta quando o jogador interage com a chave.");
+                printf("\nO: Simbolo que representa um botao que o usuario pode interagir, o botao fica no chao e o jogador deve ficar em cima dele para poder interagir.");
+                printf("\n#: Simbolo que representa um espinho. A fase e reiniciada quando o jogador toca no.");
+                printf("\n>:: Simbolo que representa um teletransporte. O teletransporte sempre deve vir em pares, quando o jogador toca em um ele e transportado para o outro e vice-versa.");
+                printf("\nX: Simbolo que representa o monstro nivel 1. Esse monstro tem um movimento aleatorio para cima, para esquerda, para baixo e para direita. Caso o monstro toque no jogador, a fase e reiniciada.");
+                printf("\nV: Simbolo que representa o monstro nivel 2. Esse monstro tem uma inteligencia para seguir o jogador (ha varias maneiras de implementar isso). Caso o monstro toque no jogador, a fase e reiniciada.\n\n");
+                break;
+            case 3:
+                system("cls");
+                printf("Girotto e Casseb estarao no seu aguardo aventureiro!\n");
+                break;
+                
+                case 4:
+                	
+                	system("cls");
+                	printf("No ano de 20XX girotto,um engenheiro brilhante  foi aprisionado  pela  mestra das maquinas A.R.G.O ou como prefere ser chamda Alessandra gladius\n");
+                	printf("agora girtto esta sendo obrigado a morta maquinas algebricas e de programcao o dia inteiro no setor de engenharia mais ele tem um plano\n");
+                	printf("antes de ser aprisionado ele tinha marcado de ir no shwo do angra com mago robotico e mestre do happy hour,casseb\n");
+                	printf("usando um aparelho de comunica telepatico ele informa para casseb sua localizca e explica a situacao o qual espelha chaves pelo seu cativeiro\n");
+                	printf("agora girotto tera que usar de suas habilidades furtivas para escapar! \n\n");
+                	break;
+            default:
+                printf("Opcao invalida. Tente novamente.\n");
+        }
+    } while (escolha != 3);
+
+    return 0;
+}
