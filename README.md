@@ -1,5 +1,7 @@
 🐉 Dungeon Crawler C: Historia e informações sobre
 
+📚 História: No ano de 20XX, Girotto, um engenheiro brilhante, foi aprisionado pela mestra das máquinas, A.R.G.O, ou como prefere ser chamada, Alessandra Gladius. Agora, Girotto está sendo obrigado a enfrentar máquinas algebricas e de programação o dia inteiro no setor de engenharia, mas ele tem um plano... Antes de ser aprisionado, ele tinha marcado de ir ao show do Angra com o Mago Robótico e o Mestre do Happy Hour, Casseb.Usando um aparelho de comunicação telepática, ele informa para Casseb sua localização e explica a situação, o qual espalha chaves pelo seu cativeiro. Agora, Girotto terá que usar suas habilidades furtivas para escapar!
+
 ✅ OBJETIVO: Pegar as chaves (C) e avançar pelas portas (D).
 
 ⛳️ CONTROLES / TUTORIAL :
