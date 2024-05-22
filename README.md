@@ -4,7 +4,7 @@ Dungeon Crawler C: Historia e informações sobre
 OBJETIVO: Pegar as chaves (C) e avançar pelas portas (D).
 
 CONTROLES / TUTORIAL :
-
+::
 W: O jogador movimenta uma unidade para cima;
 A: O jogador movimenta uma unidade para esquerda;
 S: O jogador movimenta uma unidade para baixo;
